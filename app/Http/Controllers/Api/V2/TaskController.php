@@ -2,12 +2,13 @@
 
 namespace App\Http\Controllers\Api\V2;
 
-use App\Http\Requests\StoreTaskRequest;
-use App\Http\Requests\UpdateTaskRequest;
 use App\Models\Task;
 use App\Http\Controllers\Controller;
 use App\Http\Resources\TaskResource;
 use Illuminate\Support\Facades\Auth;
+use App\Http\Requests\StoreTaskRequest;
+use App\Http\Requests\UpdateTaskRequest;
+use Illuminate\Support\Facades\Gate;
 
 class TaskController extends Controller
 {
@@ -34,6 +35,7 @@ class TaskController extends Controller
      */
     public function show(Task $task)
     {
+        Gate::authorize('view', $task);
         return TaskResource::make($task);
     }
 
